@@ -1,0 +1,102 @@
+ /* Fonte */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .container-login {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 4%;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .texto-login,
+        .cadastro {
+            padding: 2rem;
+            height: 400px;
+            width: 400px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .texto-login {
+            background-color: #007bff;
+        }
+
+        .texto-login h1 {
+            color: white;
+            text-align: center;
+            font-size: 2.4rem;
+        }
+
+        .cadastro {
+            background-color: rgb(243, 242, 242);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        input {
+            padding: 0.5rem 1rem;
+            margin-bottom: 1rem;
+            width: 100%;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        button {
+            border: none;
+            padding: 0.5rem;
+            background-color: #007bff;
+            border-radius: 4px;
+            color: white;
+            margin-top: 1rem;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .texto-login,
+            .cadastro {
+                width: 100%;
+                height: auto;
+                padding: 1.5rem;
+            }
+
+            .texto-login h1 {
+                font-size: 1.8rem;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                font-size: 14px;
+            }
+
+            .texto-login h1 {
+                font-size: 1.5rem;
+            }
+        }

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /*Fonte*/
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100..900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .container-login {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 4%;
+        }
+
+        .texto-login {
+            background-color: #1a508a;
+            padding: 2rem;
+            height: 400px;
+            width: 400px;
+            border-radius: 10px;
+        }
+
+        .texto-login h1 {
+            color: white;
+            text-align: center;
+            margin-top: 40%;
+            font-size: 2.4rem;
+        }
+
+        .cadastro {
+            background-color: rgb(243, 242, 242);
+            padding: 2rem;
+            height: 400px;
+            width: 400px;
+            border-radius: 10px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-top: 30%;
+        }
+
+        input {
+            padding: 0.5rem 1rem;
+            margin-bottom: 2%;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        button {
+            border: none;
+            padding: 0.5rem;
+            background-color: #007bff;
+            border-radius: 4px;
+            color: white;
+            margin-top: 1%;
+            cursor: pointer;
+            width: 40%;
+        }
+
+    </style>
+    <script>
+        function redirectToIndex(event) {
+            event.preventDefault(); 
+            window.location.href = "index.html";
+        }
+    </script>
+</head>
+
+<body>
+    <section>
+        <div class="container-login">
+            <div class="texto-login">
+                <h1>Login</h1>
+            </div>
+            <div class="cadastro">
+                <form action="../php/login.php" method="POST">
+                    <label for="nome"></label>
+                    <input type="text" id="nome" name="nome" placeholder="Nome" required>
+                    <label for="senha"></label>
+                    <input type="password" id="senha" name="senha" placeholder="Senha" required>
+                    <input type="submit" name="entrar" value="Entrar">
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

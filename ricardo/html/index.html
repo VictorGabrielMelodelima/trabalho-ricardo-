@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Tarefas</title>
+    <style>
+        /* Estilos gerais */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Menu lateral */
+        .menu-lateral {
+            width: 200px;
+            background-color: #333;
+            padding: 20px;
+            color: white;
+        }
+
+        .menu-lateral a {
+            display: block;
+            padding: 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background-color: #444;
+        }
+
+        .menu-lateral a:hover {
+            background-color: #555;
+        }
+
+        /* Conteúdo principal */
+        .conteudo {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .secoes {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .secao {
+            width: 30%;
+            padding: 10px;
+            background-color: #f4f4f4;
+            border-radius: 5px;
+        }
+
+        .secao h2 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .tarefa {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .tarefa button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .tarefa button:hover {
+            background-color: #0056b3;
+        }
+
+        .excluir {
+            background-color: red;
+            float: right;
+            padding: 5px 10px;
+            cursor: pointer;
+            color: white;
+            border-radius: 50%;
+            border: none;
+        }
+
+        .excluir:hover {
+            background-color: darkred;
+        }
+
+        /* Estilos para o formulário de tarefas */
+        .adicionar-tarefa {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .adicionar-tarefa input {
+            padding: 10px;
+            margin-right: 10px;
+            flex: 1;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .adicionar-tarefa button {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .adicionar-tarefa button:hover {
+            background-color: #218838;
+        }
+
+        @media (max-width: 768px) {
+            .secoes {
+                flex-direction: column;
+            }
+
+            .secao {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="menu-lateral">
+        <a href="#" id="tarefas-btn" class="menu-item">Tarefas</a>
+        <a href="http://127.0.0.1:5500/HTML/login.html" id="login-btn" class="menu-item" target="_blank">Login</a>
+    </div>
+
+    <div class="conteudo">
+        <div id="tarefas">
+            <div class="adicionar-tarefa">
+                <input type="text" id="titulo-tarefa" placeholder="Adicionar nova tarefa">
+                <button onclick="adicionarTarefa()">Adicionar</button>
+            </div>
+
+            <div class="secoes">
+                <!-- Seção Pendentes -->
+                <div class="secao" id="pendente">
+                    <h2>Pendentes</h2>
+                </div>
+
+                <!-- Seção Em Andamento -->
+                <div class="secao" id="andamento">
+                    <h2>Em Andamento</h2>
+                </div>
+
+                <!-- Seção Concluídas -->
+                <div class="secao" id="concluido">
+                    <h2>Concluídas</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let tarefas = [];
+
+        function adicionarTarefa() {
+            const titulo = document.getElementById('titulo-tarefa').value;
+            if (titulo) {
+                const novaTarefa = {
+                    id: Date.now(),
+                    titulo: titulo,
+                    status: 'pendente'
+                };
+                tarefas.push(novaTarefa);
+                document.getElementById('titulo-tarefa').value = ''; // Limpar o campo de texto
+                renderizarTarefas();
+            }
+        }
+
+        function mudarStatus(id, novoStatus) {
+            const tarefa = tarefas.find(tarefa => tarefa.id === id);
+            if (tarefa) {
+                tarefa.status = novoStatus;
+                renderizarTarefas();
+            }
+        }
+
+        function excluirTarefa(id) {
+            tarefas = tarefas.filter(tarefa => tarefa.id !== id);
+            renderizarTarefas();
+        }
+
+        function renderizarTarefas() {
+            // Limpar as seções
+            document.getElementById('pendente').innerHTML = '<h2>Pendentes</h2>';
+            document.getElementById('andamento').innerHTML = '<h2>Em Andamento</h2>';
+            document.getElementById('concluido').innerHTML = '<h2>Concluídas</h2>';
+
+            // Adicionar tarefas às seções
+            tarefas.forEach(tarefa => {
+                const tarefaElement = document.createElement('div');
+                tarefaElement.classList.add('tarefa');
+                tarefaElement.innerHTML = `
+                    <p>${tarefa.titulo}</p>
+                    <button onclick="mudarStatus(${tarefa.id}, 'andamento')">Em Andamento</button>
+                    <button onclick="mudarStatus(${tarefa.id}, 'concluido')">Concluído</button>
+                    <button class="excluir" onclick="excluirTarefa(${tarefa.id})">X</button>
+                `;
+
+                if (tarefa.status === 'pendente') {
+                    document.getElementById('pendente').appendChild(tarefaElement);
+                } else if (tarefa.status === 'andamento') {
+                    document.getElementById('andamento').appendChild(tarefaElement);
+                } else if (tarefa.status === 'concluido') {
+                    document.getElementById('concluido').appendChild(tarefaElement);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
